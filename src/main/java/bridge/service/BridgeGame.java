@@ -1,28 +1,31 @@
 package bridge.service;
 
-import bridge.domain.Bridge;
-import bridge.domain.BridgeMap;
-import bridge.domain.Direction;
-import bridge.domain.Player;
+import bridge.domain.*;
 
 public class BridgeGame {
-    private static Bridge bridge;
+    private final Bridge bridge;
     private BridgeMap bridgeMap = new BridgeMap();
     private Player player = new Player();
-    private boolean canMove = true;
+    private GameState gameState = GameState.CONTINUE;
 
     public BridgeGame(Bridge bridge) {
         this.bridge = bridge;
     }
 
     public void move(Direction direction) {
-        canMove = bridge.canMove(player, direction);
-        bridgeMap.addBridgeMap(direction, canMove);
+        updateState(player, direction);
+        bridgeMap.addBridgeMap(direction, gameState);
         player.moveForward();
     }
 
+    private void updateState(Player player, Direction direction) {
+        if (!bridge.canMove(player, direction)) {
+            gameState = GameState.FAIL;
+        }
+    }
+
     public boolean canMove() {
-        return canMove;
+        return gameState.isContinue();
     }
 
     public boolean isFinish() {
@@ -32,7 +35,7 @@ public class BridgeGame {
     public void retry() {
         bridgeMap.init();
         player.addTryCount();
-        canMove = true;
+        gameState = GameState.CONTINUE;
     }
 
     public String getBridgeMap() {

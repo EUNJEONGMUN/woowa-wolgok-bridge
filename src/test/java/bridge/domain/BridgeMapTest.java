@@ -12,7 +12,7 @@ class BridgeMapTest {
     @CsvSource(value = {"U:[ O ]:[   ]", "D:[   ]:[ O ]"}, delimiter = ':')
     void crossSuccessBridge(String direction, String topMap, String bottomMap) {
         BridgeMap bridgeMap = new BridgeMap();
-        bridgeMap.addBridgeMap(Direction.from(direction), true);
+        bridgeMap.addBridgeMap(Direction.from(direction), GameState.CONTINUE);
         Assertions.assertThat(bridgeMap.getBridgeMap()).isEqualTo(topMap + "\n" + bottomMap);
     }
 
@@ -21,7 +21,7 @@ class BridgeMapTest {
     @CsvSource(value = {"U:[ X ]:[   ]", "D:[   ]:[ X ]"}, delimiter = ':')
     void crossFailBridge(String direction, String topMap, String bottomMap) {
         BridgeMap bridgeMap = new BridgeMap();
-        bridgeMap.addBridgeMap(Direction.from(direction), false);
+        bridgeMap.addBridgeMap(Direction.from(direction), GameState.FAIL);
         Assertions.assertThat(bridgeMap.getBridgeMap()).isEqualTo(topMap + "\n" + bottomMap);
     }
 }

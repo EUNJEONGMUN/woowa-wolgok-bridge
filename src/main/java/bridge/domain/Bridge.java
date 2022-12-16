@@ -5,11 +5,11 @@ import java.util.stream.Collectors;
 
 public class Bridge {
 
-    private final List<Floor> bridge;
+    private final List<Direction> bridge;
 
     private Bridge(List<String> bridge) {
         this.bridge = bridge.stream()
-                .map(Floor::from)
+                .map(Direction::from)
                 .collect(Collectors.toUnmodifiableList());
     }
 

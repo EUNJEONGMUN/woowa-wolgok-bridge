@@ -16,8 +16,8 @@ public class BridgeMap {
         init();
     }
 
-    public void addBridgeMap(Direction direction, boolean canMove) {
-        String mark = getMark(canMove);
+    public void addBridgeMap(Direction direction, GameState gameState) {
+        String mark = getMark(gameState);
         if (direction.equals(Direction.UP)) {
             addMarkMap(bridgeTopMap, bridgeBottomMap, mark);
             return;
@@ -30,8 +30,8 @@ public class BridgeMap {
         none.add(BLANK);
     }
 
-    private String getMark(boolean canMove) {
-        if (canMove) {
+    private String getMark(GameState gameState) {
+        if (gameState.isContinue()) {
             return CORRECT_MARK;
         }
         return WRONG_MARK;
